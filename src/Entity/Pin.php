@@ -3,11 +3,13 @@
 namespace App\Entity;
 
 use App\Repository\PinRepository;
+use DateTimeImmutable;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: PinRepository::class)]
 #[ORM\Table(name: 'pins')]
+#[ORM\HasLifecycleCallbacks()]
 class Pin
 {
     #[ORM\Id]
@@ -78,5 +80,17 @@ class Pin
         $this->updatedAt = $updatedAt;
 
         return $this;
+    }
+
+    #[ORM\PrePersist]
+    #[ORM\PreUpdate]
+    public function updateTimestamp()
+    {
+        if($this->getCreatedAt() === null){
+            $this->setCreatedAt(new \DateTimeImmutable);
+        }
+
+        $this->setUpdatedAt(new \DateTimeImmutable);
+
     }
 }
