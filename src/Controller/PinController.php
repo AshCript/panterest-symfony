@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Pin;
 use App\Repository\PinRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -17,12 +18,8 @@ class PinController extends AbstractController
     }
 
     #[Route('/pin/{id<[0-9]+>}', name: 'app_pin_show', methods: ['GET'])]
-    public function show(int $id, PinRepository $pinRepository): Response
+    public function show(Pin $pin, $id): Response
     {
-        $pin = $pinRepository->find($id);
-        if(!$pin){
-            throw $this->createNotFoundException("Pin with id $id doesn't exist.");
-        }
         return $this->render('pin/show.html.twig', compact('pin'));
     }
 }
