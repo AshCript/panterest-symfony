@@ -9,7 +9,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class PinController extends AbstractController
 {
-    #[Route('/', name: 'app_pin_home')]
+    #[Route('/', name: 'app_home')]
     public function index(PinRepository $pinRepository): Response
     {
         $pins = $pinRepository->findAll();
