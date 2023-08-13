@@ -9,14 +9,14 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class PinController extends AbstractController
 {
-    #[Route('/', name: 'app_home')]
+    #[Route('/', name: 'app_home', methods: ['GET'])]
     public function index(PinRepository $pinRepository): Response
     {
         $pins = $pinRepository->findAll();
         return $this->render('pin/index.html.twig', compact('pins'));
     }
 
-    #[Route('/pin/{id<[0-9]+>}', name: 'app_pin_show')]
+    #[Route('/pin/{id<[0-9]+>}', name: 'app_pin_show', methods: ['GET'])]
     public function show(int $id, PinRepository $pinRepository): Response
     {
         $pin = $pinRepository->find($id);
