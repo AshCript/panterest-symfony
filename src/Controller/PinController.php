@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Pin;
+use App\Form\PinType;
 use App\Repository\PinRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -29,10 +30,7 @@ class PinController extends AbstractController
     public function create(Request $request, EntityManagerInterface $em): Response
     {
         $pin = new Pin();
-        $pinForm = $this->createFormBuilder($pin)
-                        ->add('title')
-                        ->add('description')
-                        ->getForm();
+        $pinForm = $this->createForm(PinType::class, $pin);
 
         $pinForm->handleRequest($request); // It set method to POST if the form is sent, else method is GET
 
@@ -56,10 +54,7 @@ class PinController extends AbstractController
     #[Route('/pin/edit/{id<[0-9]+>}', name: 'app_pin_update', methods: ['GET', 'POST'])]
     public function update(Pin $pin, Request $request, EntityManagerInterface $em): Response
     {
-        $pinForm = $this->createFormBuilder($pin)
-                        ->add('title')
-                        ->add('description')
-                        ->getForm();
+        $pinForm = $this->createForm(PinType::class, $pin);
 
         $pinForm->handleRequest($request); // It set method to POST if the form is sent, else method is GET
 
