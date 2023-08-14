@@ -22,4 +22,19 @@ class PinController extends AbstractController
     {
         return $this->render('pin/show.html.twig', compact('pin'));
     }
+
+    #[Route('/pin/create', name: 'app_pin_create', methods: ['GET', 'POST'])]
+    public function create(): Response
+    {
+        $pin = new Pin();
+        $pinForm = $this->createFormBuilder($pin)
+                        ->add('title')
+                        ->add('description')
+                        ->getForm();
+
+
+        return $this->render('pin/create.html.twig', [
+            'pinForm' => $pinForm->createView()
+        ]);
+    }
 }
