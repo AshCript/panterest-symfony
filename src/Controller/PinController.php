@@ -51,11 +51,12 @@ class PinController extends AbstractController
         ]);
     }
 
-    #[Route('/pin/edit/{id<[0-9]+>}', name: 'app_pin_update', methods: ['GET', 'POST'])]
+    #[Route('/pin/edit/{id<[0-9]+>}', name: 'app_pin_update', methods: ['GET', 'PUT', 'POST'])] // must be GET and PUT only, but gonna edit it later.
     public function update(Pin $pin, Request $request, EntityManagerInterface $em): Response
     {
-        $pinForm = $this->createForm(PinType::class, $pin);
-
+        $pinForm = $this->createForm(PinType::class, $pin, [
+            'method' => 'POST' // Must be PUT but gonna edit it later.
+        ]);
         $pinForm->handleRequest($request); // It set method to POST if the form is sent, else method is GET
 
         // If POST method found
