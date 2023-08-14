@@ -65,7 +65,6 @@ class PinController extends AbstractController
 
         // If POST method found
         if($pinForm->isSubmitted() && $pinForm->isValid()){
-            $em->persist($pin);
             $em->flush();
             return $this->redirectToRoute('app_pin_show', [
                 'id' => $pin->getId()
