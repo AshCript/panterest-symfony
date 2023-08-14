@@ -4,7 +4,9 @@ namespace App\Controller;
 
 use App\Entity\Pin;
 use App\Repository\PinRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -24,7 +26,7 @@ class PinController extends AbstractController
     }
 
     #[Route('/pin/create', name: 'app_pin_create', methods: ['GET', 'POST'])]
-    public function create(): Response
+    public function create(Request $request, EntityManagerInterface $em): Response
     {
         $pin = new Pin();
         $pinForm = $this->createFormBuilder($pin)
@@ -32,7 +34,20 @@ class PinController extends AbstractController
                         ->add('description')
                         ->getForm();
 
+        $pinForm->handleRequest($request); // It set method to POST if the form is sent, else method is GET
 
+        // If POST method found
+        if($pinForm->isSubmitted() && $pinForm->isValid()){
+            $em->persist($pin);
+            $em->flush();
+            return $this->redirectToRoute('app_pin_show', [
+                'id' => $pin->getId()
+            ]);
+        }
+        // End POST method
+
+
+        // Else (by default : GET gethod)
         return $this->render('pin/create.html.twig', [
             'pinForm' => $pinForm->createView()
         ]);
