@@ -52,4 +52,32 @@ class PinController extends AbstractController
             'pinForm' => $pinForm->createView()
         ]);
     }
+
+    #[Route('/pin/edit/{id<[0-9]+>}', name: 'app_pin_update', methods: ['GET', 'POST'])]
+    public function update(Pin $pin, Request $request, EntityManagerInterface $em): Response
+    {
+        $pinForm = $this->createFormBuilder($pin)
+                        ->add('title')
+                        ->add('description')
+                        ->getForm();
+
+        $pinForm->handleRequest($request); // It set method to POST if the form is sent, else method is GET
+
+        // If POST method found
+        if($pinForm->isSubmitted() && $pinForm->isValid()){
+            $em->persist($pin);
+            $em->flush();
+            return $this->redirectToRoute('app_pin_show', [
+                'id' => $pin->getId()
+            ]);
+        }
+        // End POST method
+
+
+        // Else (by default : GET gethod)
+        return $this->render('pin/update.html.twig', [
+            'pinForm' => $pinForm->createView(),
+            'pin' => $pin
+        ]);
+    }
 }
