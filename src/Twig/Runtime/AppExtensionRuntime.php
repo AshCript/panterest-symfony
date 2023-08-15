@@ -22,7 +22,7 @@ class AppExtensionRuntime implements RuntimeExtensionInterface
         $result = '';
         if($size < sizeof(str_split($value)))
         {
-            for($i = 0 ; $i < $size ; $i++)
+            for($i = 0 ; $i < $size - sizeof(str_split($end)) ; $i++)
             {
                 $result .= $value[$i];
             }
