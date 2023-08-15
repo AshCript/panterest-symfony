@@ -16,4 +16,21 @@ class AppExtensionRuntime implements RuntimeExtensionInterface
         return $pinSize . ' ' . ($pinSize !== 1 ? ($plural ?? $singular . 's' ) : $singular);
        
     }
+
+    public function truncate(string $value, ?int $size = 10, ?string $end = '...')
+    {
+        $result = '';
+        if($size < sizeof(str_split($value)))
+        {
+            for($i = 0 ; $i < $size ; $i++)
+            {
+                $result .= $value[$i];
+            }
+            $result .= $end;
+        }else
+        {
+            $result = $value;
+        }
+        return $result;
+    }
 }

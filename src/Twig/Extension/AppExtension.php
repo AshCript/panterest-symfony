@@ -23,6 +23,7 @@ class AppExtension extends AbstractExtension
     {
         return [
             new TwigFunction('pluralize', [AppExtensionRuntime::class, 'pluralize']),
+            new TwigFunction('truncate', [AppExtensionRuntime::class, 'truncate'])
         ];
     }
 }
