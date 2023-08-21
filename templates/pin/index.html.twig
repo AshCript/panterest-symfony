@@ -7,8 +7,8 @@
     {% for pin in pins %}
         <article>
             <h2><a href="{{ path('app_pin_show', {'id': pin.id})}}">{{ pin.title }}</a></h2>
-            <p>{{ truncate(pin.description) }}</p>
-            <p><mute>Submitted : {{ pin.createdAt | date }}</mute></p>
+            <p>{{ truncate(pin.description) }}</p> {# or if use of u filter : pin.description | u.truncate(10, '...') #}
+            <p><mute>Submitted : {{ pin.createdAt | ago }}</mute></p>
         </article>
     {% else %}
             <p>Sorry, no pins yet!</p>
