@@ -38,6 +38,8 @@ class PinController extends AbstractController
         if ($pinForm->isSubmitted() && $pinForm->isValid()) {
             $em->persist($pin);
             $em->flush();
+            $this->addFlash('SUCCESS', 'Pin created successfully!');
+
             return $this->redirectToRoute('app_pin_show', [
                 'id' => $pin->getId()
             ]);
@@ -62,6 +64,7 @@ class PinController extends AbstractController
         // If POST method found
         if ($pinForm->isSubmitted() && $pinForm->isValid()) {
             $em->flush();
+            $this->addFlash('SUCCESS', 'Pin #' . $pin->getId() . ' updated successfully!');
             return $this->redirectToRoute('app_pin_show', [
                 'id' => $pin->getId()
             ]);
@@ -77,11 +80,12 @@ class PinController extends AbstractController
     }
 
     #[Route('/pin/{id<[0-9]+>}', name: 'app_pin_delete', methods: ['POST', 'DELETE'])] // must be DELETE only, but gonna edit it later.
-    public function delete(Request $request, Pin $pin, EntityManagerInterface $em): Response
+    public function delete(Request $request, Pin $pin, int $id, EntityManagerInterface $em): Response
     {
         if ($this->isCsrfTokenValid('pin_deletion_' . $pin->getId(), $request->get('_csrf_token'))) {
             $em->remove($pin);
             $em->flush();
+            $this->addFlash('INFO', 'Pin #' . $id . ' deleted successfully!');
         }
         return $this->redirectToRoute('app_home');
     }
