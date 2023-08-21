@@ -12,6 +12,21 @@
         {% block javascripts %}
             {{ encore_entry_script_tags('app') }}
         {% endblock %}
+        <style>
+            .alert{
+                color: white;
+                text-align: center;
+                padding: 15px;
+            }
+
+            .alert-success{
+                background-color: green;
+                
+            }
+            .alert-info{
+                background-color: teal;
+            }
+        </style>
     </head>
     <body>
         <nav>
@@ -20,6 +35,7 @@
                 <li><a href={{ path('app_pin_create') }}>Create pin</a></li>
             </ul>
         </nav>
+        {{ include('partials/_flash_messages.html.twig') }}
         {% block body %}{% endblock %}
     </body>
 </html>
