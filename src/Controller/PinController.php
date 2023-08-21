@@ -35,7 +35,7 @@ class PinController extends AbstractController
         $pinForm->handleRequest($request); // It set method to POST if the form is sent, else method is GET
 
         // If POST method found
-        if($pinForm->isSubmitted() && $pinForm->isValid()){
+        if ($pinForm->isSubmitted() && $pinForm->isValid()) {
             $em->persist($pin);
             $em->flush();
             return $this->redirectToRoute('app_pin_show', [
@@ -60,7 +60,7 @@ class PinController extends AbstractController
         $pinForm->handleRequest($request); // It set method to POST if the form is sent, else method is GET
 
         // If POST method found
-        if($pinForm->isSubmitted() && $pinForm->isValid()){
+        if ($pinForm->isSubmitted() && $pinForm->isValid()) {
             $em->flush();
             return $this->redirectToRoute('app_pin_show', [
                 'id' => $pin->getId()
@@ -79,8 +79,7 @@ class PinController extends AbstractController
     #[Route('/pin/{id<[0-9]+>}', name: 'app_pin_delete', methods: ['POST', 'DELETE'])] // must be DELETE only, but gonna edit it later.
     public function delete(Request $request, Pin $pin, EntityManagerInterface $em): Response
     {
-        if($this->isCsrfTokenValid('pin_deletion_' . $pin->getId(), $request->get('_csrf_token')))
-        {
+        if ($this->isCsrfTokenValid('pin_deletion_' . $pin->getId(), $request->get('_csrf_token'))) {
             $em->remove($pin);
             $em->flush();
         }
