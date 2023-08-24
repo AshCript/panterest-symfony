@@ -3,8 +3,10 @@
 {% block title 'Creating a new pin' %}
 
 {% block body %}
-    <h1>Create Pin</h1>
-    {{ include('partials/_form.html.twig') }}
-
-    <a href='{{ path('app_home') }}'>Go back</a>
+    <div class="row">
+        <div class="col-md-6 mx-auto">
+            <h1>Create Pin</h1>
+            {{ include('partials/_form.html.twig') }}
+        </div>
+    </div>
 {% endblock %}
