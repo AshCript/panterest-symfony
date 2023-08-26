@@ -1,3 +1,19 @@
-body {
-    background-color: lightgray;
+@import "~bootstrap/scss/bootstrap.scss";
+
+@import 'shared/variables';
+
+
+.alert{
+    color: white;
+    text-align: center;
+    padding: 15px;
+    margin: 0;
+    border-radius: 0;
+    border: none;
+    &.alert-success{
+        background-color: green;
+    }
+    &.alert-info{
+        background-color: teal;
+    }
 }
